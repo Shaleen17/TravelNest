@@ -1,0 +1,1809 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>TravelNest – Project Documentation</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #f0f4f8;
+        font-family: "Inter", Arial, sans-serif;
+        font-size: 11pt;
+        color: #1a1a1a;
+        line-height: 1.7;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* ── TOOLBAR ── */
+      .toolbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 0.6rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      }
+      .toolbar-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .doc-icon {
+        width: 36px;
+        height: 36px;
+        background: #4a2e2a;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .doc-icon svg {
+        width: 20px;
+        height: 20px;
+        fill: #fbeedb;
+      }
+      .doc-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+      .doc-saved {
+        font-size: 0.75rem;
+        color: #888;
+        margin-top: 0.1rem;
+      }
+      .toolbar-right {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .tb-btn {
+        padding: 0.45rem 1.1rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .tb-btn-outline {
+        background: transparent;
+        border: 1px solid #dadce0;
+        color: #444;
+      }
+      .tb-btn-outline:hover {
+        background: #f1f3f4;
+      }
+      .tb-btn-primary {
+        background: #4a2e2a;
+        color: #fbeedb;
+      }
+      .tb-btn-primary:hover {
+        background: #6b4440;
+      }
+
+      /* ── PAGE ── */
+      .page-wrap {
+        max-width: 820px;
+        margin: 80px auto 60px;
+        background: #fff;
+        box-shadow:
+          0 1px 4px rgba(0, 0, 0, 0.15),
+          0 4px 16px rgba(0, 0, 0, 0.08);
+        border-radius: 2px;
+        padding: 72px 86px;
+      }
+
+      /* ── COVER ── */
+      .cover {
+        text-align: center;
+        padding-bottom: 2.5rem;
+        border-bottom: 2px solid #4a2e2a;
+        margin-bottom: 2.5rem;
+      }
+      .cover-badge {
+        display: inline-block;
+        background: #fbeedb;
+        color: #4a2e2a;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.35rem 0.9rem;
+        border-radius: 99px;
+        margin-bottom: 1.2rem;
+        border: 1px solid #f5dfc0;
+      }
+      .cover h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #4a2e2a;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        margin-bottom: 0.6rem;
+      }
+      .cover-sub {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+      }
+      .cover-meta {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        font-size: 0.78rem;
+        color: #888;
+      }
+      .cover-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .cover-meta strong {
+        color: #4a2e2a;
+      }
+
+      /* ── TOC ── */
+      .toc {
+        background: #faf8f6;
+        border: 1px solid #eddfd4;
+        border-left: 4px solid #4a2e2a;
+        border-radius: 4px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .toc-title {
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #4a2e2a;
+        margin-bottom: 0.85rem;
+      }
+      .toc ol {
+        padding-left: 1.2rem;
+      }
+      .toc li {
+        font-size: 0.85rem;
+        color: #555;
+        padding: 0.18rem 0;
+        counter-increment: none;
+      }
+      .toc a {
+        color: #4a2e2a;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      /* ── HEADINGS ── */
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #4a2e2a;
+        letter-spacing: -0.02em;
+        margin: 2.5rem 0 0.9rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1.5px solid #eddfd4;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      h2 .h-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        background: #4a2e2a;
+        color: #fbeedb;
+        border-radius: 6px;
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+      h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #2d1e1b;
+        margin: 1.5rem 0 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      h3::before {
+        content: "▸";
+        color: #4a2e2a;
+        font-size: 0.8rem;
+      }
+      h4 {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #4a2e2a;
+        margin: 1.1rem 0 0.4rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 0.75rem;
+      }
+
+      /* ── BODY TEXT ── */
+      p {
+        font-size: 0.9rem;
+        color: #333;
+        margin-bottom: 0.75rem;
+        line-height: 1.75;
+      }
+      ul,
+      ol {
+        padding-left: 1.4rem;
+        margin-bottom: 0.75rem;
+      }
+      li {
+        font-size: 0.88rem;
+        color: #333;
+        padding: 0.2rem 0;
+        line-height: 1.65;
+      }
+      strong {
+        color: #1a1a1a;
+        font-weight: 700;
+      }
+      em {
+        color: #555;
+      }
+
+      /* ── TABLES ── */
+      .tbl-wrap {
+        overflow-x: auto;
+        margin: 1rem 0 1.25rem;
+        border-radius: 6px;
+        border: 1px solid #e8e0d8;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      thead tr {
+        background: #4a2e2a;
+        color: #fbeedb;
+      }
+      thead th {
+        padding: 0.65rem 1rem;
+        text-align: left;
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+      tbody tr {
+        border-bottom: 1px solid #f0ebe4;
+      }
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+      tbody tr:nth-child(even) {
+        background: #fdfaf7;
+      }
+      tbody td {
+        padding: 0.6rem 1rem;
+        vertical-align: top;
+        color: #333;
+      }
+      tbody td:first-child {
+        font-weight: 600;
+        color: #4a2e2a;
+      }
+
+      /* ── CODE ── */
+      code {
+        font-family: "Courier New", monospace;
+        font-size: 0.8rem;
+        background: #faf0e8;
+        color: #4a2e2a;
+        padding: 0.15rem 0.4rem;
+        border-radius: 3px;
+        border: 1px solid #eddfd4;
+      }
+      pre {
+        background: #1e1208;
+        color: #f5dfc0;
+        border-radius: 6px;
+        padding: 1.1rem 1.25rem;
+        font-family: "Courier New", monospace;
+        font-size: 0.78rem;
+        line-height: 1.65;
+        overflow-x: auto;
+        margin: 1rem 0 1.25rem;
+        border-left: 3px solid #4a2e2a;
+      }
+      pre code {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font-size: inherit;
+      }
+
+      /* ── CALLOUT BOXES ── */
+      .callout {
+        display: flex;
+        gap: 0.75rem;
+        padding: 1rem 1.15rem;
+        border-radius: 6px;
+        margin: 1rem 0 1.25rem;
+        font-size: 0.86rem;
+        line-height: 1.65;
+      }
+      .callout-icon {
+        font-size: 1.1rem;
+        margin-top: 0.1rem;
+        flex-shrink: 0;
+      }
+      .callout-body strong {
+        display: block;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 0.25rem;
+      }
+      .callout.info {
+        background: #fdf6ee;
+        border: 1px solid #eddfd4;
+        border-left: 3px solid #4a2e2a;
+        color: #3d2200;
+      }
+      .callout.tip {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-left: 3px solid #16a34a;
+        color: #14532d;
+      }
+      .callout.warn {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-left: 3px solid #d97706;
+        color: #78350f;
+      }
+
+      /* ── BADGE ── */
+      .badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 99px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .badge-brown {
+        background: #fbeedb;
+        color: #4a2e2a;
+        border: 1px solid #f5dfc0;
+      }
+      .badge-green {
+        background: #d1fae5;
+        color: #065f46;
+      }
+      .badge-red {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .badge-blue {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      /* ── DIVIDER ── */
+      .divider {
+        border: none;
+        border-top: 1px solid #eddfd4;
+        margin: 2rem 0;
+      }
+
+      /* ── SCHEMA BLOCK ── */
+      .schema {
+        background: #fdfaf7;
+        border: 1px solid #eddfd4;
+        border-radius: 6px;
+        padding: 1rem 1.25rem;
+        margin: 1rem 0 1.25rem;
+        font-size: 0.83rem;
+      }
+      .schema-row {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.3rem 0;
+        border-bottom: 1px solid #f5ede3;
+      }
+      .schema-row:last-child {
+        border-bottom: none;
+      }
+      .schema-key {
+        font-family: "Courier New", monospace;
+        color: #4a2e2a;
+        font-weight: 700;
+        min-width: 160px;
+        flex-shrink: 0;
+      }
+      .schema-type {
+        color: #888;
+        min-width: 90px;
+        flex-shrink: 0;
+        font-family: "Courier New", monospace;
+        font-size: 0.78rem;
+      }
+      .schema-desc {
+        color: #555;
+      }
+
+      /* ── TEAM FOOTER ── */
+      .doc-footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 2px solid #4a2e2a;
+        text-align: center;
+      }
+      .doc-footer p {
+        font-size: 0.8rem;
+        color: #888;
+        margin-bottom: 0.3rem;
+      }
+      .team-names {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+      }
+      .team-chip {
+        background: #fbeedb;
+        color: #4a2e2a;
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 0.35rem 0.85rem;
+        border-radius: 99px;
+        border: 1px solid #f5dfc0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      /* ── PAGE NUMBER ── */
+      .page-num {
+        text-align: right;
+        font-size: 0.7rem;
+        color: #bbb;
+        margin-top: 2.5rem;
+      }
+
+      /* ── PRINT ── */
+      @media print {
+        body {
+          background: #fff;
+        }
+        .toolbar {
+          display: none;
+        }
+        .page-wrap {
+          margin: 0;
+          box-shadow: none;
+          padding: 60px 72px;
+        }
+        pre {
+          -webkit-print-color-adjust: exact;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .page-wrap {
+          padding: 2rem 1.25rem;
+          margin: 70px 0.5rem 2rem;
+        }
+        .toolbar {
+          padding: 0.5rem 0.75rem;
+        }
+        .cover h1 {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"
+            />
+          </svg>
+        </div>
+        <div>
+          <div class="doc-title">TravelNest – Project Documentation</div>
+          <div class="doc-saved">
+            Last edited · Shaleen Singh, Prasham Tiwari, Gautam Vishwakarma
+          </div>
+        </div>
+      </div>
+      <div class="toolbar-right">
+        <button class="tb-btn tb-btn-outline" onclick="window.print()">
+          🖨 Print / Save PDF
+        </button>
+        <button class="tb-btn tb-btn-primary" onclick="copyAll()">
+          📋 Copy All Text
+        </button>
+      </div>
+    </div>
+
+    <!-- DOCUMENT PAGE -->
+    <div class="page-wrap" id="docPage">
+      <!-- COVER -->
+      <div class="cover">
+        <div class="cover-badge">📄 Project Documentation</div>
+        <h1>TravelNest</h1>
+        <p class="cover-sub">
+          Tourist Guide Web Application — Complete Technical & Functional
+          Reference
+        </p>
+        <div class="cover-meta">
+          <span>📦 <strong>Version:</strong> 1.0.0</span>
+          <span>🗂 <strong>Type:</strong> Single Page Application</span>
+          <span>📅 <strong>Year:</strong> 2025</span>
+          <span>🖥 <strong>Platform:</strong> Web (Frontend Only)</span>
+        </div>
+      </div>
+
+      <!-- TOC -->
+      <div class="toc">
+        <div class="toc-title">📑 Table of Contents</div>
+        <ol>
+          <li><a href="#s1">Project Overview</a></li>
+          <li><a href="#s2">Key Benefits</a></li>
+          <li><a href="#s3">Tech Stack — Full Detail</a></li>
+          <li><a href="#s4">Project Structure</a></li>
+          <li><a href="#s5">Features & How They Work</a></li>
+          <li><a href="#s6">Data Architecture</a></li>
+          <li><a href="#s7">LocalStorage System</a></li>
+          <li><a href="#s8">UI/UX Design System</a></li>
+          <li><a href="#s9">Page-by-Page Breakdown</a></li>
+          <li><a href="#s10">JavaScript Modules Reference</a></li>
+          <li><a href="#s11">How to Run the Project</a></li>
+          <li><a href="#s12">Browser Compatibility</a></li>
+          <li><a href="#s13">Future Enhancements</a></li>
+        </ol>
+      </div>
+
+      <!-- ── SECTION 1 ── -->
+      <h2 id="s1"><span class="h-num">1</span> Project Overview</h2>
+      <p>
+        <strong>TravelNest</strong> is a fully client-side Tourist Guide Web
+        Application built without any backend or database. It allows users to
+        discover, explore, save, and plan trips to popular tourist destinations
+        across India — entirely within the browser.
+      </p>
+      <p>
+        All user data (favourites, trip plans, dark mode preference, recently
+        viewed destinations) is stored persistently using the browser's
+        <code>localStorage</code> API, meaning data survives page refreshes and
+        browser restarts without requiring a server, login, or cloud storage.
+      </p>
+
+      <h3>What Problem Does It Solve?</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Problem</th>
+              <th>TravelNest Solution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Scattered travel information</td>
+              <td>
+                Centralised destination cards with full details, tips, gallery,
+                and maps
+              </td>
+            </tr>
+            <tr>
+              <td>No offline trip planning tool</td>
+              <td>
+                LocalStorage-powered trip planner — works completely offline
+              </td>
+            </tr>
+            <tr>
+              <td>Generic travel websites</td>
+              <td>Personalised recommendations + recently viewed history</td>
+            </tr>
+            <tr>
+              <td>Complex trip management</td>
+              <td>
+                Simple planner with add / edit / delete and countdown badges
+              </td>
+            </tr>
+            <tr>
+              <td>Poor mobile travel browsing</td>
+              <td>
+                Fully responsive layout across mobile, tablet, and desktop
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 2 ── -->
+      <h2 id="s2"><span class="h-num">2</span> Key Benefits</h2>
+      <h3>For Users</h3>
+      <ul>
+        <li>
+          <strong>Zero sign-up required</strong> — No account, no login, no
+          password. Open and use instantly.
+        </li>
+        <li>
+          <strong>Works offline</strong> — Once loaded, the app works without an
+          internet connection (except map embeds and images).
+        </li>
+        <li>
+          <strong>Data never disappears</strong> — Saved destinations and trip
+          plans persist in LocalStorage permanently until manually cleared.
+        </li>
+        <li>
+          <strong>Fast and lightweight</strong> — No backend calls, no API
+          latency. All filtering and searching is instant, client-side.
+        </li>
+        <li>
+          <strong>Privacy-first</strong> — No user data is sent to any server.
+          Everything stays on the user's own device.
+        </li>
+        <li>
+          <strong>Dark mode</strong> — Reduces eye strain during night browsing;
+          preference is saved automatically.
+        </li>
+        <li>
+          <strong>Native share</strong> — Uses the Web Share API on mobile, or
+          clipboard copy on desktop.
+        </li>
+      </ul>
+
+      <h3>For Developers & Students</h3>
+      <ul>
+        <li>
+          <strong>No installation required</strong> — Pure HTML, CSS, and
+          JavaScript. Just open the file in any browser.
+        </li>
+        <li>
+          <strong>Clean, modular code</strong> — Each feature (storage,
+          rendering, filtering, modal) is a clearly separated function.
+        </li>
+        <li>
+          <strong>Easy to extend</strong> — Add new destinations by appending to
+          the <code>DESTINATIONS</code> JSON array. No database migration
+          needed.
+        </li>
+        <li>
+          <strong>Great learning project</strong> — Demonstrates SPA routing,
+          LocalStorage CRUD, DOM manipulation, event handling, and responsive
+          design without any framework.
+        </li>
+      </ul>
+
+      <!-- ── SECTION 3 ── -->
+      <h2 id="s3"><span class="h-num">3</span> Tech Stack — Full Detail</h2>
+
+      <h3>HTML5</h3>
+      <p>
+        <strong>Role:</strong> Structure and content of the entire application.
+      </p>
+      <ul>
+        <li>
+          Semantic elements: <code>&lt;nav&gt;</code>,
+          <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code>
+        </li>
+        <li>
+          Native form inputs: <code>&lt;input&gt;</code>,
+          <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code>
+        </li>
+        <li><code>&lt;iframe&gt;</code> for Google Maps embedding</li>
+        <li><code>data-*</code> attributes for category tab filtering</li>
+        <li>
+          <code>loading="lazy"</code> on images for performance optimisation
+        </li>
+      </ul>
+
+      <h3>CSS3 (Custom)</h3>
+      <p>
+        <strong>Role:</strong> Visual design, animations, layout, theming, and
+        responsiveness.
+      </p>
+      <ul>
+        <li>
+          <strong>CSS Custom Properties</strong> — Central design token system
+          (<code>--primary</code>, <code>--secondary</code>,
+          <code>--radius</code>, <code>--shadow-md</code>, etc.)
+        </li>
+        <li>
+          <strong>Flexbox & CSS Grid</strong> — All layouts: navbar, card grids,
+          filter bar, modal content
+        </li>
+        <li>
+          <strong>CSS Animations</strong> — Hover card lift, modal entrance
+          (<code>@keyframes modalIn</code>), toast slide-in/out, image zoom
+        </li>
+        <li>
+          <strong>Backdrop Filter</strong> — Frosted glass navbar effect (<code
+            >backdrop-filter: blur(12px)</code
+          >)
+        </li>
+        <li>
+          <strong>Media Queries</strong> — Responsive breakpoints at 640px,
+          768px, 1024px
+        </li>
+        <li>
+          <strong>CSS <code>clamp()</code></strong> — Fluid, responsive
+          typography for hero and section titles
+        </li>
+        <li>
+          <strong>Dark Mode</strong> — Class-based (<code>.dark</code>) toggling
+          with CSS variable overrides
+        </li>
+      </ul>
+
+      <h3>Tailwind CSS v3 (via CDN)</h3>
+      <p>
+        <strong>Role:</strong> Utility-first CSS framework for rapid layout and
+        spacing scaffolding.
+      </p>
+      <ul>
+        <li>
+          Grid layouts: <code>grid-cols-1 sm:grid-cols-2 lg:grid-cols-3</code>
+        </li>
+        <li>
+          Responsive spacing: <code>px-4 md:px-6</code>, <code>py-16</code>
+        </li>
+        <li>Show/hide: <code>hidden</code> class toggled by JavaScript</li>
+        <li>Flex alignment: <code>flex items-center justify-between</code></li>
+      </ul>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div class="callout-body">
+          <strong>Note</strong>Tailwind handles layout scaffolding. All
+          branding, theming, hover effects, and animations are handled by custom
+          CSS using design tokens.
+        </div>
+      </div>
+
+      <h3>Vanilla JavaScript (ES6+)</h3>
+      <p>
+        <strong>Role:</strong> All application logic — routing, rendering,
+        filtering, storage, and interactivity.
+      </p>
+      <ul>
+        <li>
+          Arrow functions, template literals, destructuring, spread operator
+        </li>
+        <li>
+          <code>Array.filter()</code>, <code>Array.map()</code>,
+          <code>Array.sort()</code>, <code>Array.find()</code>
+        </li>
+        <li>
+          <code>JSON.parse()</code> / <code>JSON.stringify()</code> for
+          LocalStorage serialisation
+        </li>
+        <li>
+          <code>setTimeout()</code> for debounced search (350ms) and
+          auto-removing toasts
+        </li>
+        <li>
+          <code>navigator.share()</code> and
+          <code>navigator.clipboard</code> Web APIs
+        </li>
+      </ul>
+
+      <h3>Font Awesome 6.5 (via CDN)</h3>
+      <p>
+        <strong>Role:</strong> Professional icon library — all travel-themed UI
+        icons.
+      </p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Icons Used</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Navigation</td>
+              <td>
+                fa-house-chimney, fa-compass, fa-bookmark, fa-suitcase-rolling,
+                fa-circle-info
+              </td>
+            </tr>
+            <tr>
+              <td>Destinations</td>
+              <td>
+                fa-location-dot, fa-umbrella-beach, fa-mountain, fa-landmark,
+                fa-place-of-worship, fa-leaf
+              </td>
+            </tr>
+            <tr>
+              <td>Actions</td>
+              <td>
+                fa-magnifying-glass, fa-arrow-right, fa-share-nodes,
+                fa-calendar-plus, fa-floppy-disk, fa-trash
+              </td>
+            </tr>
+            <tr>
+              <td>UI Controls</td>
+              <td>
+                fa-moon, fa-sun, fa-bars, fa-xmark, fa-star, fa-chevron-left,
+                fa-chevron-right
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Browser APIs Used</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>API</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>localStorage</td>
+              <td>
+                Persistent storage for favourites, plans, dark mode, recently
+                viewed
+              </td>
+            </tr>
+            <tr>
+              <td>navigator.share()</td>
+              <td>Native mobile share sheet</td>
+            </tr>
+            <tr>
+              <td>navigator.clipboard</td>
+              <td>Copy destination text to clipboard on desktop</td>
+            </tr>
+            <tr>
+              <td>Date API</td>
+              <td>Trip countdown calculation and date formatting</td>
+            </tr>
+            <tr>
+              <td>window.scrollTo()</td>
+              <td>Smooth scroll to top on page navigation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✅</div>
+        <div class="callout-body">
+          <strong>No Backend / No Framework</strong>TravelNest uses no backend,
+          no Node.js, no React/Vue/Angular, and no build tools. It is instantly
+          runnable by opening <code>index.html</code> in any modern browser and
+          is deployable to any static host (GitHub Pages, Netlify, Vercel) with
+          zero configuration.
+        </div>
+      </div>
+
+      <!-- ── SECTION 4 ── -->
+      <h2 id="s4"><span class="h-num">4</span> Project Structure</h2>
+      <pre><code>travelnest/
+│
+├── index.html                ← Entire application (HTML + CSS + JS)
+│
+└── (Recommended split structure)
+    ├── css/
+    │   └── style.css         ← Extract from &lt;style&gt; block
+    ├── js/
+    │   ├── data.js           ← DESTINATIONS JSON array
+    │   ├── storage.js        ← LocalStorage helper (S object)
+    │   ├── app.js            ← Navigation, dark mode, init
+    │   ├── render.js         ← buildCard(), renderHome(), renderExplore()
+    │   ├── favorites.js      ← toggleFav(), renderFavorites()
+    │   ├── planner.js        ← savePlan(), renderPlans(), editPlan()
+    │   └── modal.js          ← openDetail(), slider, tabs
+    └── assets/
+        └── images/           ← Local image assets</code></pre>
+
+      <div class="callout info">
+        <div class="callout-icon">📌</div>
+        <div class="callout-body">
+          <strong>Current Build</strong>The project ships as a single
+          <code>index.html</code> file for maximum portability and ease of use.
+          No build step or server is required.
+        </div>
+      </div>
+
+      <!-- ── SECTION 5 ── -->
+      <h2 id="s5"><span class="h-num">5</span> Features & How They Work</h2>
+
+      <h3>Single Page Application (SPA) Routing</h3>
+      <p>
+        TravelNest simulates multi-page navigation without URL changes or page
+        reloads. All 5 pages are <code>&lt;div&gt;</code> elements in the DOM,
+        toggled via JavaScript.
+      </p>
+      <pre><code>function showPage(p) {
+  // Hide all pages
+  PAGES.forEach(id => {
+    document.getElementById('page-' + id).classList.toggle('hidden', id !== p);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (p === 'home')     renderHome();
+  if (p === 'explore')  renderExplore();
+  if (p === 'favorites') renderFavorites();
+  if (p === 'planner')  renderPlans();
+}</code></pre>
+
+      <h3>Real-Time Search & Filter System</h3>
+      <p>
+        The Explore page features a multi-criteria filter system with instant
+        results.
+      </p>
+      <ul>
+        <li>
+          User types or changes a dropdown → triggers
+          <code>renderExplore()</code>
+        </li>
+        <li>
+          Debounced by <strong>350ms</strong> using <code>setTimeout</code> to
+          prevent lag on fast typing
+        </li>
+        <li>
+          All filters applied simultaneously using <code>Array.filter()</code>
+        </li>
+        <li>
+          Results sorted using <code>Array.sort()</code> by rating or name
+        </li>
+        <li>
+          DOM updated by injecting HTML strings into <code>#exploreGrid</code>
+        </li>
+      </ul>
+
+      <h3>Image Slider</h3>
+      <p>Each destination modal contains a smooth 3-image gallery slider.</p>
+      <ul>
+        <li>Images laid out in a flex row inside <code>.slider-track</code></li>
+        <li>
+          <code>transform: translateX(-N * 100%)</code> shifts the visible image
+        </li>
+        <li>
+          <code>window._sliderIdx</code> tracks the current index globally
+        </li>
+        <li>
+          Dot indicators update by toggling the <code>.active</code> class
+        </li>
+      </ul>
+
+      <h3>Toast Notification System</h3>
+      <p>
+        Non-intrusive feedback messages appear bottom-right for every user
+        action.
+      </p>
+      <ul>
+        <li>
+          <code>toast(msg, type)</code> creates a <code>&lt;div&gt;</code> and
+          appends it to <code>#toast-container</code>
+        </li>
+        <li>
+          CSS <code>@keyframes</code> handles slide-in (<code>toastIn</code>)
+          and fade-out (<code>toastOut</code>) animations
+        </li>
+        <li>
+          <code>setTimeout</code> removes the element from the DOM after 3.2
+          seconds
+        </li>
+        <li>
+          Three types:
+          <span class="badge badge-green">success</span> &nbsp;<span
+            class="badge badge-red"
+            >error</span
+          >
+          &nbsp;<span class="badge badge-brown">info</span>
+        </li>
+      </ul>
+
+      <h3>Recently Viewed & Recommendations</h3>
+      <ul>
+        <li>
+          <strong>Recently Viewed:</strong> Every
+          <code>openDetail(id)</code> call prepends the ID to
+          <code>tn_recent</code> in LocalStorage. Duplicates are removed, capped
+          at 8 items.
+        </li>
+        <li>
+          <strong>Recommendations:</strong> Destinations outside the top-6
+          featured list are randomly shuffled using
+          <code>.sort(() => Math.random() - 0.5)</code>. The first 4 are shown.
+        </li>
+      </ul>
+
+      <!-- ── SECTION 6 ── -->
+      <h2 id="s6"><span class="h-num">6</span> Data Architecture</h2>
+      <p>
+        All destination data is stored as a JavaScript array of objects in the
+        source file. No external API or database is required.
+      </p>
+
+      <h3>Destination Object Schema</h3>
+      <div class="schema">
+        <div class="schema-row">
+          <span class="schema-key">id</span
+          ><span class="schema-type">Number</span
+          ><span class="schema-desc">Unique numeric identifier</span>
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">name</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc">Destination name (e.g. "Taj Mahal")</span>
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">location</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc"
+            >City and state (e.g. "Agra, Uttar Pradesh")</span
+          >
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">category</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc"
+            >"beach" | "hill" | "historical" | "temple" | "nature" |
+            "city"</span
+          >
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">rating</span
+          ><span class="schema-type">Number</span
+          ><span class="schema-desc"
+            >Decimal rating from 0.0 to 5.0 (e.g. 4.9)</span
+          >
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">description</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc"
+            >Full destination description paragraph</span
+          >
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">image</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc">Primary card image URL</span>
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">gallery</span
+          ><span class="schema-type">String[]</span
+          ><span class="schema-desc"
+            >Array of 3 image URLs for the modal slider</span
+          >
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">best_time</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc"
+            >Best months to visit (e.g. "October – March")</span
+          >
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">nearby</span
+          ><span class="schema-type">String[]</span
+          ><span class="schema-desc">List of nearby attractions</span>
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">tips</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc"
+            >Travel tips and local advice for visitors</span
+          >
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">map_link</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc"
+            >Google Maps embed URL for the map tab</span
+          >
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">➕</div>
+        <div class="callout-body">
+          <strong>Adding New Destinations</strong>Simply append a new object to
+          the <code>DESTINATIONS</code> array following the schema above. No
+          other code changes are required — the new destination will
+          automatically appear in all grids, filters, and search results.
+        </div>
+      </div>
+
+      <!-- ── SECTION 7 ── -->
+      <h2 id="s7"><span class="h-num">7</span> LocalStorage System</h2>
+
+      <h3>Storage Keys</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Type</th>
+              <th>Contents</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>tn_favs</td>
+              <td>Array&lt;Number&gt;</td>
+              <td>Array of saved destination IDs</td>
+            </tr>
+            <tr>
+              <td>tn_plans</td>
+              <td>Array&lt;Object&gt;</td>
+              <td>Array of trip plan objects</td>
+            </tr>
+            <tr>
+              <td>tn_dark</td>
+              <td>Boolean</td>
+              <td>Dark mode preference (true/false)</td>
+            </tr>
+            <tr>
+              <td>tn_recent</td>
+              <td>Array&lt;Number&gt;</td>
+              <td>Recently viewed destination IDs (max 8)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Trip Plan Object Schema</h3>
+      <div class="schema">
+        <div class="schema-row">
+          <span class="schema-key">id</span
+          ><span class="schema-type">Number</span
+          ><span class="schema-desc"
+            >Timestamp used as unique ID: <code>Date.now()</code></span
+          >
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">dest</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc">Destination name (free text input)</span>
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">date</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc">ISO date string: "YYYY-MM-DD"</span>
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">notes</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc">Optional notes / reminders</span>
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">budget</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc">Optional budget amount in ₹</span>
+        </div>
+        <div class="schema-row">
+          <span class="schema-key">mode</span
+          ><span class="schema-type">String</span
+          ><span class="schema-desc"
+            >Travel mode emoji string (e.g. "✈️ Flight")</span
+          >
+        </div>
+      </div>
+
+      <h3>Storage Helper API</h3>
+      <pre><code>const S = {
+  get:      (key) => JSON.parse(localStorage.getItem(key)),
+  set:      (key, v) => localStorage.setItem(key, JSON.stringify(v)),
+  getFavs:  () => S.get('tn_favs')   || [],
+  setFavs:  (v) => S.set('tn_favs', v),
+  getPlans: () => S.get('tn_plans')  || [],
+  setPlans: (v) => S.set('tn_plans', v),
+  getDark:  () => S.get('tn_dark')   || false,
+  setDark:  (v) => S.set('tn_dark', v),
+  getRecent:() => S.get('tn_recent') || [],
+  setRecent:(v) => S.set('tn_recent', v),
+};</code></pre>
+      <p>
+        All reads return <code>|| []</code> or <code>|| false</code> as a
+        fallback, so the app never crashes on a fresh browser with no existing
+        data.
+      </p>
+
+      <!-- ── SECTION 8 ── -->
+      <h2 id="s8"><span class="h-num">8</span> UI/UX Design System</h2>
+
+      <h3>Color Palette</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Hex Value</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>--primary</td>
+              <td>#4A2E2A</td>
+              <td>Buttons, active states, accents, icon tiles</td>
+            </tr>
+            <tr>
+              <td>--primary-light</td>
+              <td>#6b4440</td>
+              <td>Button hover states</td>
+            </tr>
+            <tr>
+              <td>--primary-dark</td>
+              <td>#331f1c</td>
+              <td>Footer background</td>
+            </tr>
+            <tr>
+              <td>--secondary</td>
+              <td>#FBEEDB</td>
+              <td>Card badges, info blocks, category pills</td>
+            </tr>
+            <tr>
+              <td>--secondary-deep</td>
+              <td>#f5dfc0</td>
+              <td>Hover states, underline accents</td>
+            </tr>
+            <tr>
+              <td>--white</td>
+              <td>#FFFFFF</td>
+              <td>Card and modal backgrounds</td>
+            </tr>
+            <tr>
+              <td>--text-main</td>
+              <td>#1a1108</td>
+              <td>Primary headings and body text</td>
+            </tr>
+            <tr>
+              <td>--text-muted</td>
+              <td>#7a6a62</td>
+              <td>Secondary text, descriptions, labels</td>
+            </tr>
+            <tr>
+              <td>--border</td>
+              <td>#eddfd4</td>
+              <td>Card borders, input borders, dividers</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Typography Scale</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Element</th>
+              <th>Size</th>
+              <th>Weight</th>
+              <th>Letter Spacing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hero Title</td>
+              <td>clamp(2.4rem, 7vw, 5rem)</td>
+              <td>900</td>
+              <td>-0.04em</td>
+            </tr>
+            <tr>
+              <td>Section Title</td>
+              <td>clamp(1.5rem, 3.5vw, 2.1rem)</td>
+              <td>800</td>
+              <td>-0.03em</td>
+            </tr>
+            <tr>
+              <td>Card Name</td>
+              <td>1.05rem</td>
+              <td>800</td>
+              <td>-0.02em</td>
+            </tr>
+            <tr>
+              <td>Body / Description</td>
+              <td>0.88–0.9rem</td>
+              <td>400</td>
+              <td>normal</td>
+            </tr>
+            <tr>
+              <td>Eyebrow Labels</td>
+              <td>0.72–0.78rem</td>
+              <td>700–800</td>
+              <td>0.05–0.14em</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Shadow & Radius Tokens</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Value</th>
+              <th>Used On</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>--shadow-sm</td>
+              <td>0 2px 8px rgba(74,46,42,.08)</td>
+              <td>Cards (default state)</td>
+            </tr>
+            <tr>
+              <td>--shadow-md</td>
+              <td>0 6px 24px rgba(74,46,42,.13)</td>
+              <td>Cards (hover), dropdowns</td>
+            </tr>
+            <tr>
+              <td>--shadow-lg</td>
+              <td>0 16px 48px rgba(74,46,42,.18)</td>
+              <td>Modals, hero search box</td>
+            </tr>
+            <tr>
+              <td>--radius-sm</td>
+              <td>8px</td>
+              <td>Buttons, inputs, small chips</td>
+            </tr>
+            <tr>
+              <td>--radius</td>
+              <td>14px</td>
+              <td>Cards, filter bars, plan cards</td>
+            </tr>
+            <tr>
+              <td>--radius-lg</td>
+              <td>20px</td>
+              <td>Modals, destination cards</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 9 ── -->
+      <h2 id="s9"><span class="h-num">9</span> Page-by-Page Breakdown</h2>
+
+      <h3>Home Page</h3>
+      <ul>
+        <li>
+          <strong>Hero Section</strong> — Full-viewport background image,
+          gradient overlay, animated eyebrow label, fluid headline, search box
+          with Enter key support, and quick-category pill buttons
+        </li>
+        <li>
+          <strong>Stats Bar</strong> — 4 key numbers: 50+ destinations, 4.9★
+          rating, 12K+ users, 6 categories
+        </li>
+        <li>
+          <strong>Featured Destinations</strong> — Top 6 by rating, rendered as
+          full destination cards
+        </li>
+        <li>
+          <strong>Recommended</strong> — 4 randomly selected from remaining
+          destinations
+        </li>
+        <li>
+          <strong>Recently Viewed</strong> — Pulled from LocalStorage; empty
+          state shown when no history
+        </li>
+      </ul>
+
+      <h3>Explore Page</h3>
+      <ul>
+        <li>
+          Multi-criteria filter bar (text search + category + min rating + sort
+          order)
+        </li>
+        <li>Category tab row for quick one-click filtering</li>
+        <li>
+          Debounced real-time rendering (350ms delay prevents excessive DOM
+          updates)
+        </li>
+        <li>Empty state displayed when no results match current filters</li>
+      </ul>
+
+      <h3>Saved (Favorites) Page</h3>
+      <ul>
+        <li>
+          Reads <code>tn_favs</code> from LocalStorage and maps IDs to
+          destination objects
+        </li>
+        <li>Cards include a remove button to delete individual saved items</li>
+        <li>
+          Empty state with a CTA button that navigates to the Explore page
+        </li>
+      </ul>
+
+      <h3>Trip Planner Page</h3>
+      <ul>
+        <li>
+          Form fields: destination, travel date, budget (₹), travel mode, notes
+        </li>
+        <li>
+          Dual-mode form: <em>Add New Trip</em> / <em>Edit Trip</em> controlled
+          by <code>editingPlanId</code>
+        </li>
+        <li>Plans sorted by travel date (ascending, nearest first)</li>
+        <li>
+          Countdown badge: <span class="badge badge-brown">Xd away</span>
+          <span class="badge badge-green">Today!</span>
+          <span class="badge badge-blue">Past</span>
+        </li>
+        <li>Edit populates the form and smoothly scrolls to the top</li>
+      </ul>
+
+      <h3>About Page</h3>
+      <ul>
+        <li>Stats grid with brand-coloured icon tiles</li>
+        <li>Three feature cards: Discover, Save & Plan, Share</li>
+      </ul>
+
+      <h3>Destination Detail Modal</h3>
+      <ul>
+        <li>Opens on card "Explore" button click from any page</li>
+        <li>3-image gallery slider with dot indicators and arrow buttons</li>
+        <li>
+          Three tabs: <strong>Overview</strong> (description, best time,
+          nearby), <strong>Travel Tips</strong>, <strong>Map</strong> (Google
+          Maps embed)
+        </li>
+        <li>
+          Action buttons: Plan This Trip (opens quick planner modal), Share
+        </li>
+        <li>Bookmark toggle synced across all visible cards in real time</li>
+      </ul>
+
+      <!-- ── SECTION 10 ── -->
+      <h2 id="s10">
+        <span class="h-num">10</span> JavaScript Modules Reference
+      </h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>showPage(p)</td>
+              <td>
+                SPA router — shows target page div, hides all others, triggers
+                render
+              </td>
+            </tr>
+            <tr>
+              <td>renderHome()</td>
+              <td>
+                Populates featured, recommended, and recently viewed grids
+              </td>
+            </tr>
+            <tr>
+              <td>buildCard(d, showRemove)</td>
+              <td>Returns an HTML string for a destination card</td>
+            </tr>
+            <tr>
+              <td>renderExplore()</td>
+              <td>Filters, sorts, and renders the explore grid (debounced)</td>
+            </tr>
+            <tr>
+              <td>renderFavorites()</td>
+              <td>Reads LocalStorage and renders saved destination cards</td>
+            </tr>
+            <tr>
+              <td>renderPlans()</td>
+              <td>
+                Reads LocalStorage and renders trip planner cards with
+                countdowns
+              </td>
+            </tr>
+            <tr>
+              <td>openDetail(id)</td>
+              <td>
+                Builds and opens the detail modal; adds ID to recently viewed
+              </td>
+            </tr>
+            <tr>
+              <td>toggleFav(id, e)</td>
+              <td>
+                Adds or removes a destination from LocalStorage favourites
+              </td>
+            </tr>
+            <tr>
+              <td>savePlan()</td>
+              <td>
+                Validates and saves or updates a trip plan to LocalStorage
+              </td>
+            </tr>
+            <tr>
+              <td>editPlan(id)</td>
+              <td>
+                Populates the planner form with existing plan data for editing
+              </td>
+            </tr>
+            <tr>
+              <td>deletePlan(id)</td>
+              <td>
+                Removes a trip plan from LocalStorage and re-renders the list
+              </td>
+            </tr>
+            <tr>
+              <td>toast(msg, type)</td>
+              <td>
+                Creates and auto-removes a toast notification after 3.2 seconds
+              </td>
+            </tr>
+            <tr>
+              <td>toggleDark()</td>
+              <td>
+                Flips dark mode state and persists preference to LocalStorage
+              </td>
+            </tr>
+            <tr>
+              <td>heroSearch()</td>
+              <td>
+                Reads hero search input and navigates to filtered Explore page
+              </td>
+            </tr>
+            <tr>
+              <td>filterAndShow(cat)</td>
+              <td>Sets category filter and navigates to Explore page</td>
+            </tr>
+            <tr>
+              <td>slide(dir)</td>
+              <td>Moves the image slider left (-1) or right (+1)</td>
+            </tr>
+            <tr>
+              <td>showTab(name, btn)</td>
+              <td>Switches visible tab inside the detail modal</td>
+            </tr>
+            <tr>
+              <td>shareDestination(id)</td>
+              <td>Shares via Web Share API or copies text to clipboard</td>
+            </tr>
+            <tr>
+              <td>updateFavCount()</td>
+              <td>Updates the saved count pill badge in the navbar</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 11 ── -->
+      <h2 id="s11"><span class="h-num">11</span> How to Run the Project</h2>
+
+      <h3>Method 1 — Direct File Open (Simplest)</h3>
+      <pre><code>1. Download or copy the index.html file to your computer
+2. Double-click the file to open it in any modern browser
+3. Done — no installation, no server, no terminal required</code></pre>
+
+      <h3>Method 2 — VS Code Live Server</h3>
+      <pre><code>1. Open the project folder in Visual Studio Code
+2. Install the "Live Server" extension by Ritwick Dey
+3. Right-click index.html → "Open with Live Server"
+4. App opens at http://127.0.0.1:5500</code></pre>
+
+      <h3>Method 3 — GitHub Pages</h3>
+      <pre><code>1. Create a new GitHub repository
+2. Upload index.html to the root of the repository
+3. Go to Settings → Pages → Source: main branch / root
+4. App is live at https://yourusername.github.io/repository-name</code></pre>
+
+      <h3>Method 4 — Netlify (Drag & Drop)</h3>
+      <pre><code>1. Go to netlify.com → "Add new site" → "Deploy manually"
+2. Drag and drop your project folder into the upload zone
+3. A live public URL is generated instantly — no configuration needed</code></pre>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div class="callout-body">
+          <strong>Internet Required For</strong>Tailwind CSS CDN, Font Awesome
+          CDN, destination images (Unsplash), and Google Maps embeds require an
+          internet connection. All app logic, routing, filtering, and
+          LocalStorage features work fully offline once initial assets are
+          cached.
+        </div>
+      </div>
+
+      <!-- ── SECTION 12 ── -->
+      <h2 id="s12"><span class="h-num">12</span> Browser Compatibility</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Browser</th>
+              <th>Support</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Google Chrome 90+</td>
+              <td><span class="badge badge-green">✅ Full</span></td>
+              <td>Recommended browser</td>
+            </tr>
+            <tr>
+              <td>Mozilla Firefox 88+</td>
+              <td><span class="badge badge-green">✅ Full</span></td>
+              <td>All features supported</td>
+            </tr>
+            <tr>
+              <td>Microsoft Edge 90+</td>
+              <td><span class="badge badge-green">✅ Full</span></td>
+              <td>All features supported</td>
+            </tr>
+            <tr>
+              <td>Safari 14+</td>
+              <td><span class="badge badge-green">✅ Full</span></td>
+              <td>backdrop-filter supported from Safari 14</td>
+            </tr>
+            <tr>
+              <td>Chrome Android</td>
+              <td><span class="badge badge-green">✅ Full</span></td>
+              <td>Web Share API works natively</td>
+            </tr>
+            <tr>
+              <td>Safari iOS 14+</td>
+              <td><span class="badge badge-green">✅ Full</span></td>
+              <td>All features supported</td>
+            </tr>
+            <tr>
+              <td>Internet Explorer</td>
+              <td><span class="badge badge-red">❌ None</span></td>
+              <td>No CSS variables or ES6 support</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 13 ── -->
+      <h2 id="s13"><span class="h-num">13</span> Future Enhancements</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Weather API</td>
+              <td>
+                Integrate OpenWeatherMap to show live weather for each
+                destination
+              </td>
+            </tr>
+            <tr>
+              <td>PWA Support</td>
+              <td>
+                Add a Service Worker + Web App Manifest for full offline
+                capability and "Add to Home Screen"
+              </td>
+            </tr>
+            <tr>
+              <td>Backend Integration</td>
+              <td>
+                Connect to a Node.js/Express + MongoDB backend to sync data
+                across devices
+              </td>
+            </tr>
+            <tr>
+              <td>User Authentication</td>
+              <td>
+                Google OAuth login so plans and favourites sync to the cloud
+              </td>
+            </tr>
+            <tr>
+              <td>Interactive Map View</td>
+              <td>
+                Leaflet.js or Google Maps JS API to show all destinations on a
+                single map
+              </td>
+            </tr>
+            <tr>
+              <td>Itinerary Builder</td>
+              <td>
+                Drag-and-drop multi-day planner with day-wise activity
+                scheduling
+              </td>
+            </tr>
+            <tr>
+              <td>User Reviews</td>
+              <td>
+                User-submitted reviews and photos stored in LocalStorage or a
+                backend
+              </td>
+            </tr>
+            <tr>
+              <td>Currency Converter</td>
+              <td>Convert budget estimates using a live exchange rate API</td>
+            </tr>
+            <tr>
+              <td>Multi-language Support</td>
+              <td>i18n support for Hindi and other regional languages</td>
+            </tr>
+            <tr>
+              <td>Export to PDF</td>
+              <td>Export trip plans as downloadable PDF itineraries</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- FOOTER -->
+      <div class="doc-footer">
+        <p>
+          TravelNest v1.0.0 &nbsp;·&nbsp; Frontend Web Application &nbsp;·&nbsp;
+          2025
+        </p>
+        <p style="margin-top: 0.25rem; font-size: 0.78rem; color: #aaa">
+          Built with HTML5 · CSS3 · Tailwind CSS · Vanilla JavaScript
+        </p>
+        <div class="team-names">
+          <div class="team-chip">👨‍💻 Shaleen Singh</div>
+          <div class="team-chip">👨‍💻 Prasham Tiwari</div>
+          <div class="team-chip">👨‍💻 Gautam Vishwakarma</div>
+        </div>
+      </div>
+
+      <div class="page-num">TravelNest Project Documentation · v1.0.0</div>
+    </div>
+
+    <script>
+      function copyAll() {
+        const el = document.getElementById("docPage");
+        const text = el.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.querySelector(".tb-btn-primary");
+          btn.textContent = "✅ Copied!";
+          setTimeout(() => (btn.textContent = "📋 Copy All Text"), 2500);
+        });
+      }
+      // Smooth scroll for TOC links
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const t = document.querySelector(a.getAttribute("href"));
+          if (t) t.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    </script>
+  </body>
+</html>

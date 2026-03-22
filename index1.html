@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>TravelNest – Discover Your Next Journey</title>
+    <link rel="icon" type="png" href="Brand Logo.png" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"
+      defer
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style></style>
+  </head>
+  <body>
+    <!-- TOAST -->
+    <div id="toast-container"></div>
+
+    <!-- ═══════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════ -->
+    <nav class="tn-nav" id="mainNav">
+      <div class="tn-nav-inner">
+        <!-- Logo -->
+        <div class="tn-logo" onclick="showPage('home')">
+          <div class="tn-logo-icon">
+            <i class="fas fa-map-location-dot"></i>
+          </div>
+          TravelNest
+        </div>
+
+        <!-- Desktop Links -->
+        <div class="tn-nav-links hidden md:flex">
+          <a class="tn-nav-link active" onclick="showPage('home')" href="#"
+            ><i class="fas fa-house-chimney mr-1.5 text-xs opacity-70"></i
+            >Home</a
+          >
+          <a class="tn-nav-link" onclick="showPage('explore')" href="#"
+            ><i class="fas fa-compass mr-1.5 text-xs opacity-70"></i>Explore</a
+          >
+          <a class="tn-nav-link" onclick="showPage('favorites')" href="#">
+            <i class="fas fa-bookmark mr-1.5 text-xs opacity-70"></i>Saved
+            <span
+              id="fav-count"
+              class="tn-fav-pill"
+              style="display: none"
+            ></span>
+          </a>
+          <a class="tn-nav-link" onclick="showPage('planner')" href="#"
+            ><i class="fas fa-suitcase-rolling mr-1.5 text-xs opacity-70"></i
+            >Plan Trip</a
+          >
+          <a class="tn-nav-link" onclick="showPage('about')" href="#"
+            ><i class="fas fa-circle-info mr-1.5 text-xs opacity-70"></i
+            >About</a
+          >
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="toggleDark()" id="darkBtn" class="tn-icon-btn">
+            <i id="darkIcon" class="fas fa-moon text-sm"></i>
+          </button>
+          <button onclick="toggleMobileMenu()" class="tn-icon-btn md:hidden">
+            <i class="fas fa-bars text-sm"></i>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden md:hidden">
+        <a
+          class="tn-mobile-link active"
+          onclick="
+            showPage('home');
+            toggleMobileMenu();
+          "
+          href="#"
+          ><i class="fas fa-house-chimney w-4"></i>Home</a
+        >
+        <a
+          class="tn-mobile-link"
+          onclick="
+            showPage('explore');
+            toggleMobileMenu();
+          "
+          href="#"
+          ><i class="fas fa-compass w-4"></i>Explore</a
+        >
+        <a
+          class="tn-mobile-link"
+          onclick="
+            showPage('favorites');
+            toggleMobileMenu();
+          "
+          href="#"
+          ><i class="fas fa-bookmark w-4"></i>Saved</a
+        >
+        <a
+          class="tn-mobile-link"
+          onclick="
+            showPage('planner');
+            toggleMobileMenu();
+          "
+          href="#"
+          ><i class="fas fa-suitcase-rolling w-4"></i>Plan Trip</a
+        >
+        <a
+          class="tn-mobile-link"
+          onclick="
+            showPage('about');
+            toggleMobileMenu();
+          "
+          href="#"
+          ><i class="fas fa-circle-info w-4"></i>About</a
+        >
+      </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════
+     HOME
+═══════════════════════════════════════ -->
+    <div id="page-home">
+      <!-- Hero -->
+      <section class="tn-hero">
+        <div class="hero-overlay"></div>
+        <div class="tn-hero-content fade-in">
+          <div class="tn-hero-eyebrow">
+            <i class="fas fa-plane-departure text-xs"></i>India's Favourite
+            Travel Guide
+          </div>
+          <h1 class="tn-hero-title">
+            Where Will You<br /><span>Go Next?</span>
+          </h1>
+          <p class="tn-hero-sub">
+            Discover breathtaking destinations, plan seamless journeys, and
+            create memories that stay with you forever.
+          </p>
+          <!-- Search -->
+          <div class="tn-search">
+            <i
+              class="fas fa-magnifying-glass text-sm"
+              style="color: var(--text-soft)"
+            ></i>
+            <input
+              type="text"
+              id="heroSearchInput"
+              placeholder="Search destinations, cities, experiences…"
+            />
+            <button class="tn-search-btn" onclick="heroSearch()">
+              <i class="fas fa-arrow-right mr-1.5"></i>Search
+            </button>
+          </div>
+          <!-- Quick Cats -->
+          <div class="flex flex-wrap justify-center gap-2 mt-2">
+            <button class="tn-cat-pill" onclick="filterAndShow('beach')">
+              <i class="fas fa-umbrella-beach text-xs"></i>Beaches
+            </button>
+            <button class="tn-cat-pill" onclick="filterAndShow('hill')">
+              <i class="fas fa-mountain text-xs"></i>Hill Stations
+            </button>
+            <button class="tn-cat-pill" onclick="filterAndShow('historical')">
+              <i class="fas fa-landmark text-xs"></i>Historical
+            </button>
+            <button class="tn-cat-pill" onclick="filterAndShow('temple')">
+              <i class="fas fa-place-of-worship text-xs"></i>Temples
+            </button>
+            <button class="tn-cat-pill" onclick="filterAndShow('nature')">
+              <i class="fas fa-leaf text-xs"></i>Nature
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <div class="tn-stat-bar">
+        <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="tn-stat">
+            <div class="tn-stat-num">50+</div>
+            <div class="tn-stat-label">Destinations</div>
+          </div>
+          <div class="tn-stat">
+            <div class="tn-stat-num">4.9★</div>
+            <div class="tn-stat-label">Avg Rating</div>
+          </div>
+          <div class="tn-stat">
+            <div class="tn-stat-num">12K+</div>
+            <div class="tn-stat-label">Happy Travellers</div>
+          </div>
+          <div class="tn-stat">
+            <div class="tn-stat-num">6</div>
+            <div class="tn-stat-label">Categories</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured -->
+      <section class="py-16 max-w-7xl mx-auto px-4 md:px-6">
+        <div class="flex items-end justify-between mb-10">
+          <div>
+            <div class="tn-eyebrow">Top Picks</div>
+            <h2 class="tn-section-title">Featured Destinations</h2>
+            <p class="tn-section-sub">Handpicked gems across India</p>
+          </div>
+          <button
+            onclick="showPage('explore')"
+            class="tn-btn-ghost hidden md:inline-flex"
+          >
+            View all <i class="fas fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+        <div
+          id="featuredGrid"
+          class="tn-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        ></div>
+      </section>
+
+      <!-- Recommended -->
+      <section class="tn-section-alt py-16">
+        <div class="max-w-7xl mx-auto px-4 md:px-6">
+          <div class="flex items-end justify-between mb-10">
+            <div>
+              <div class="tn-eyebrow">For You</div>
+              <h2 class="tn-section-title">Recommended</h2>
+              <p class="tn-section-sub">Based on popular traveller choices</p>
+            </div>
+          </div>
+          <div
+            id="recommendedGrid"
+            class="tn-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          ></div>
+        </div>
+      </section>
+
+      <!-- Recently Viewed -->
+      <section class="py-16 max-w-7xl mx-auto px-4 md:px-6">
+        <div class="mb-10">
+          <div class="tn-eyebrow">Continue Exploring</div>
+          <h2 class="tn-section-title">Recently Viewed</h2>
+          <p class="tn-section-sub">Pick up where you left off</p>
+        </div>
+        <div
+          id="recentGrid"
+          class="tn-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+        ></div>
+        <div
+          id="recentEmpty"
+          class="hidden text-center py-14"
+          style="color: var(--text-soft)"
+        >
+          <div
+            style="
+              width: 72px;
+              height: 72px;
+              background: var(--secondary);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto 1rem;
+              font-size: 1.6rem;
+              color: var(--primary);
+            "
+          >
+            <i class="fas fa-clock-rotate-left"></i>
+          </div>
+          <p style="font-weight: 600; color: var(--text-muted)">
+            No recently viewed destinations yet
+          </p>
+          <p style="font-size: 0.85rem; margin-top: 0.35rem">
+            Start exploring to see your history here
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     EXPLORE
+═══════════════════════════════════════ -->
+    <div id="page-explore" class="hidden pt-20 min-h-screen">
+      <div class="max-w-7xl mx-auto px-4 md:px-6 py-10">
+        <div class="mb-8">
+          <div class="tn-eyebrow">Discover</div>
+          <h2 class="tn-section-title">Explore Destinations</h2>
+          <p class="tn-section-sub">Find your perfect getaway</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="tn-filter-bar mb-6">
+          <div class="flex-1 min-w-48">
+            <label class="tn-label">Search</label>
+            <input
+              id="exploreSearch"
+              type="text"
+              placeholder="Destination, city or keyword…"
+              oninput="renderExplore()"
+              class="tn-input"
+            />
+          </div>
+          <div>
+            <label class="tn-label">Category</label>
+            <select
+              id="filterCat"
+              onchange="renderExplore()"
+              class="tn-input"
+              style="min-width: 140px"
+            >
+              <option value="">All Categories</option>
+              <option value="beach">Beaches</option>
+              <option value="hill">Hill Stations</option>
+              <option value="historical">Historical</option>
+              <option value="temple">Temples</option>
+              <option value="nature">Nature</option>
+              <option value="city">City</option>
+            </select>
+          </div>
+          <div>
+            <label class="tn-label">Min Rating</label>
+            <select
+              id="filterRating"
+              onchange="renderExplore()"
+              class="tn-input"
+            >
+              <option value="0">Any Rating</option>
+              <option value="4">4.0 & above</option>
+              <option value="4.5">4.5 & above</option>
+            </select>
+          </div>
+          <div>
+            <label class="tn-label">Sort</label>
+            <select id="filterSort" onchange="renderExplore()" class="tn-input">
+              <option value="rating">Top Rated</option>
+              <option value="name">Name A–Z</option>
+            </select>
+          </div>
+          <button
+            onclick="resetFilters()"
+            class="tn-btn-outline"
+            style="align-self: flex-end"
+          >
+            <i class="fas fa-rotate-left text-xs"></i>Reset
+          </button>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="flex flex-wrap gap-2 mb-8" id="categoryTabs">
+          <button
+            class="tn-tab active"
+            data-cat=""
+            onclick="setCatTab(this, '')"
+          >
+            All
+          </button>
+          <button
+            class="tn-tab"
+            data-cat="beach"
+            onclick="setCatTab(this, 'beach')"
+          >
+            <i class="fas fa-umbrella-beach mr-1"></i>Beach
+          </button>
+          <button
+            class="tn-tab"
+            data-cat="hill"
+            onclick="setCatTab(this, 'hill')"
+          >
+            <i class="fas fa-mountain mr-1"></i>Hill
+          </button>
+          <button
+            class="tn-tab"
+            data-cat="historical"
+            onclick="setCatTab(this, 'historical')"
+          >
+            <i class="fas fa-landmark mr-1"></i>Historical
+          </button>
+          <button
+            class="tn-tab"
+            data-cat="temple"
+            onclick="setCatTab(this, 'temple')"
+          >
+            <i class="fas fa-place-of-worship mr-1"></i>Temple
+          </button>
+          <button
+            class="tn-tab"
+            data-cat="nature"
+            onclick="setCatTab(this, 'nature')"
+          >
+            <i class="fas fa-leaf mr-1"></i>Nature
+          </button>
+          <button
+            class="tn-tab"
+            data-cat="city"
+            onclick="setCatTab(this, 'city')"
+          >
+            <i class="fas fa-city mr-1"></i>City
+          </button>
+        </div>
+
+        <div id="exploreLoader" class="tn-loader">
+          <div class="spinner"></div>
+        </div>
+        <div
+          id="exploreGrid"
+          class="tn-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        ></div>
+        <div
+          id="exploreEmpty"
+          class="hidden text-center py-16"
+          style="color: var(--text-soft)"
+        >
+          <div
+            style="
+              width: 72px;
+              height: 72px;
+              background: var(--secondary);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto 1rem;
+              font-size: 1.6rem;
+              color: var(--primary);
+            "
+          >
+            <i class="fas fa-magnifying-glass"></i>
+          </div>
+          <p
+            style="
+              font-weight: 700;
+              font-size: 1.1rem;
+              color: var(--text-muted);
+            "
+          >
+            No destinations found
+          </p>
+          <p style="font-size: 0.85rem; margin-top: 0.35rem">
+            Try adjusting your search or filters
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     FAVORITES
+═══════════════════════════════════════ -->
+    <div id="page-favorites" class="hidden pt-20 min-h-screen">
+      <div class="max-w-7xl mx-auto px-4 md:px-6 py-10">
+        <div class="mb-10">
+          <div class="tn-eyebrow">Your Collection</div>
+          <h2 class="tn-section-title">Saved Destinations</h2>
+          <p class="tn-section-sub">
+            Places you've bookmarked for your next adventure
+          </p>
+        </div>
+        <div
+          id="favGrid"
+          class="tn-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        ></div>
+        <div id="favEmpty" class="hidden text-center py-20">
+          <div
+            style="
+              width: 80px;
+              height: 80px;
+              background: var(--secondary);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto 1.25rem;
+              font-size: 1.8rem;
+              color: var(--primary);
+            "
+          >
+            <i class="fas fa-bookmark"></i>
+          </div>
+          <p
+            style="font-weight: 800; font-size: 1.2rem; color: var(--text-main)"
+          >
+            No saved destinations yet
+          </p>
+          <p
+            style="
+              font-size: 0.9rem;
+              color: var(--text-muted);
+              margin-top: 0.5rem;
+            "
+          >
+            Explore and bookmark places you'd love to visit
+          </p>
+          <button onclick="showPage('explore')" class="tn-btn-primary mt-6">
+            <i class="fas fa-compass"></i>Start Exploring
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PLANNER
+═══════════════════════════════════════ -->
+    <div id="page-planner" class="hidden pt-20 min-h-screen">
+      <div class="max-w-4xl mx-auto px-4 md:px-6 py-10">
+        <div class="mb-10">
+          <div class="tn-eyebrow">Plan Your Journey</div>
+          <h2 class="tn-section-title">Trip Planner</h2>
+          <p class="tn-section-sub">
+            Organise your upcoming adventures in one place
+          </p>
+        </div>
+
+        <!-- Form -->
+        <div
+          style="
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+          "
+          class="dark:bg-gray-800"
+        >
+          <h3
+            style="
+              font-weight: 800;
+              font-size: 1.05rem;
+              margin-bottom: 1.25rem;
+              color: var(--text-main);
+              display: flex;
+              align-items: center;
+              gap: 0.6rem;
+            "
+            id="planFormTitle"
+          >
+            <span
+              style="
+                width: 28px;
+                height: 28px;
+                background: var(--secondary);
+                border-radius: 6px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--primary);
+                font-size: 0.8rem;
+              "
+              ><i class="fas fa-plus"></i
+            ></span>
+            Add New Trip
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="tn-label">Destination *</label>
+              <input
+                id="planDest"
+                type="text"
+                placeholder="e.g. Goa, India"
+                class="tn-input"
+              />
+            </div>
+            <div>
+              <label class="tn-label">Travel Date *</label>
+              <input id="planDate" type="date" class="tn-input" />
+            </div>
+            <div>
+              <label class="tn-label">Budget (₹)</label>
+              <input
+                id="planBudget"
+                type="number"
+                placeholder="e.g. 25000"
+                class="tn-input"
+              />
+            </div>
+            <div>
+              <label class="tn-label">Travel Mode</label>
+              <select id="planMode" class="tn-input">
+                <option>✈️ Flight</option>
+                <option>🚂 Train</option>
+                <option>🚌 Bus</option>
+                <option>🚗 Car</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="tn-label">Notes</label>
+              <textarea
+                id="planNotes"
+                rows="3"
+                placeholder="Packing list, hotel ideas, things to do…"
+                class="tn-input resize-none"
+              ></textarea>
+            </div>
+          </div>
+          <div class="flex gap-3 mt-5">
+            <button onclick="savePlan()" class="tn-btn-primary">
+              <i class="fas fa-floppy-disk text-xs"></i>Save Trip
+            </button>
+            <button
+              onclick="cancelEdit()"
+              id="cancelEditBtn"
+              class="tn-btn-outline hidden"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <div id="plansList"></div>
+        <div id="plansEmpty" class="hidden text-center py-16">
+          <div
+            style="
+              width: 72px;
+              height: 72px;
+              background: var(--secondary);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto 1rem;
+              font-size: 1.6rem;
+              color: var(--primary);
+            "
+          >
+            <i class="fas fa-suitcase-rolling"></i>
+          </div>
+          <p
+            style="
+              font-weight: 700;
+              font-size: 1.05rem;
+              color: var(--text-main);
+            "
+          >
+            No trips planned yet
+          </p>
+          <p
+            style="
+              font-size: 0.85rem;
+              color: var(--text-muted);
+              margin-top: 0.4rem;
+            "
+          >
+            Add your first trip above to get started
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════ -->
+    <div id="page-about" class="hidden pt-20 min-h-screen">
+      <div class="max-w-5xl mx-auto px-4 md:px-6 py-10">
+        <div class="text-center mb-14">
+          <div class="tn-eyebrow justify-center" style="display: flex">
+            Our Story
+          </div>
+          <h2 class="tn-section-title mt-2">About TravelNest</h2>
+          <p
+            style="
+              color: var(--text-muted);
+              max-width: 520px;
+              margin: 1rem auto 0;
+              font-size: 0.95rem;
+              line-height: 1.7;
+            "
+          >
+            TravelNest is your trusted travel companion — helping curious
+            explorers discover hidden gems, plan seamless adventures, and share
+            extraordinary journeys across India and beyond.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
+          <div class="tn-about-stat">
+            <div class="tn-about-icon"><i class="fas fa-map-pin"></i></div>
+            <div
+              style="
+                font-size: 1.6rem;
+                font-weight: 900;
+                color: var(--primary);
+                letter-spacing: -0.04em;
+              "
+            >
+              50+
+            </div>
+            <div
+              style="
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                font-weight: 600;
+                margin-top: 0.2rem;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+            >
+              Destinations
+            </div>
+          </div>
+          <div class="tn-about-stat">
+            <div class="tn-about-icon"><i class="fas fa-users"></i></div>
+            <div
+              style="
+                font-size: 1.6rem;
+                font-weight: 900;
+                color: var(--primary);
+                letter-spacing: -0.04em;
+              "
+            >
+              12K+
+            </div>
+            <div
+              style="
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                font-weight: 600;
+                margin-top: 0.2rem;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+            >
+              Travellers
+            </div>
+          </div>
+          <div class="tn-about-stat">
+            <div class="tn-about-icon"><i class="fas fa-tags"></i></div>
+            <div
+              style="
+                font-size: 1.6rem;
+                font-weight: 900;
+                color: var(--primary);
+                letter-spacing: -0.04em;
+              "
+            >
+              6
+            </div>
+            <div
+              style="
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                font-weight: 600;
+                margin-top: 0.2rem;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+            >
+              Categories
+            </div>
+          </div>
+          <div class="tn-about-stat">
+            <div class="tn-about-icon"><i class="fas fa-star"></i></div>
+            <div
+              style="
+                font-size: 1.6rem;
+                font-weight: 900;
+                color: var(--primary);
+                letter-spacing: -0.04em;
+              "
+            >
+              4.9★
+            </div>
+            <div
+              style="
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                font-weight: 600;
+                margin-top: 0.2rem;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+            >
+              Avg Rating
+            </div>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-5">
+          <div class="tn-feature-card">
+            <div
+              style="
+                width: 48px;
+                height: 48px;
+                background: var(--secondary);
+                border-radius: var(--radius-sm);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+                color: var(--primary);
+              "
+            >
+              <i class="fas fa-compass"></i>
+            </div>
+            <h3 style="font-weight: 800; margin-bottom: 0.5rem">Discover</h3>
+            <p
+              style="
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                line-height: 1.6;
+              "
+            >
+              Find curated destinations with rich details, travel insights, and
+              local tips from experienced travellers.
+            </p>
+          </div>
+          <div class="tn-feature-card">
+            <div
+              style="
+                width: 48px;
+                height: 48px;
+                background: var(--secondary);
+                border-radius: var(--radius-sm);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+                color: var(--primary);
+              "
+            >
+              <i class="fas fa-bookmark"></i>
+            </div>
+            <h3 style="font-weight: 800; margin-bottom: 0.5rem">Save & Plan</h3>
+            <p
+              style="
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                line-height: 1.6;
+              "
+            >
+              Bookmark favourites and build detailed itineraries. All data is
+              saved locally — your plans never disappear.
+            </p>
+          </div>
+          <div class="tn-feature-card">
+            <div
+              style="
+                width: 48px;
+                height: 48px;
+                background: var(--secondary);
+                border-radius: var(--radius-sm);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+                color: var(--primary);
+              "
+            >
+              <i class="fas fa-share-nodes"></i>
+            </div>
+            <h3 style="font-weight: 800; margin-bottom: 0.5rem">Share</h3>
+            <p
+              style="
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                line-height: 1.6;
+              "
+            >
+              Share amazing destinations with friends and family in one click
+              via native share or clipboard copy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     DETAIL MODAL
+═══════════════════════════════════════ -->
+    <div id="detailModal" class="modal" onclick="closeModal(event)">
+      <div class="tn-modal" onclick="event.stopPropagation()">
+        <div class="relative">
+          <button
+            onclick="closeDetailModal()"
+            style="
+              position: absolute;
+              top: 14px;
+              right: 14px;
+              z-index: 10;
+              width: 36px;
+              height: 36px;
+              border-radius: 99px;
+              border: none;
+              background: rgba(255, 255, 255, 0.9);
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: var(--shadow-md);
+              color: var(--text-main);
+              transition: var(--transition);
+            "
+            onmouseover="this.style.background = 'var(--white)'"
+            onmouseout="this.style.background = 'rgba(255,255,255,.9)'"
+          >
+            <i class="fas fa-xmark"></i>
+          </button>
+          <div id="modalContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PLANNER QUICK MODAL
+═══════════════════════════════════════ -->
+    <div id="plannerModal" class="modal" onclick="closePlannerModal(event)">
+      <div
+        class="tn-modal"
+        style="max-width: 440px"
+        onclick="event.stopPropagation()"
+      >
+        <div style="padding: 2rem">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <div
+              style="
+                width: 40px;
+                height: 40px;
+                background: var(--secondary);
+                border-radius: var(--radius-sm);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--primary);
+                font-size: 1rem;
+              "
+            >
+              <i class="fas fa-calendar-plus"></i>
+            </div>
+            <h3 style="font-weight: 800; font-size: 1.1rem">
+              Quick Add to Planner
+            </h3>
+          </div>
+          <label class="tn-label">Destination</label>
+          <input
+            id="qpDest"
+            type="text"
+            class="tn-input mb-3"
+            placeholder="Where are you going?"
+          />
+          <label class="tn-label">Travel Date</label>
+          <input id="qpDate" type="date" class="tn-input mb-3" />
+          <label class="tn-label">Notes</label>
+          <textarea
+            id="qpNotes"
+            rows="3"
+            class="tn-input resize-none mb-4"
+            placeholder="Any notes or reminders…"
+          ></textarea>
+          <div class="flex gap-3">
+            <button
+              onclick="saveQuickPlan()"
+              class="tn-btn-primary flex-1 justify-center"
+            >
+              <i class="fas fa-floppy-disk text-xs"></i>Save Trip
+            </button>
+            <button
+              onclick="closePlannerModal()"
+              class="tn-btn-outline flex-1 justify-center"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+    <footer class="tn-footer mt-20">
+      <div
+        class="max-w-6xl mx-auto px-4 md:px-6 py-14 grid grid-cols-1 md:grid-cols-3 gap-10"
+      >
+        <div>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 0.6rem;
+              font-weight: 800;
+              font-size: 1.15rem;
+              color: var(--secondary);
+              margin-bottom: 0.9rem;
+            "
+          >
+            <div
+              style="
+                width: 34px;
+                height: 34px;
+                border-radius: 8px;
+                background: rgba(251, 238, 219, 0.12);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.85rem;
+              "
+            >
+              <i class="fas fa-map-location-dot"></i>
+            </div>
+            TravelNest
+          </div>
+          <p style="font-size: 0.85rem; line-height: 1.65">
+            Your trusted guide to discovering, planning, and sharing incredible
+            destinations across India and the world.
+          </p>
+        </div>
+        <div>
+          <p
+            style="
+              font-size: 0.72rem;
+              font-weight: 800;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              color: var(--secondary);
+              margin-bottom: 0.85rem;
+            "
+          >
+            Navigation
+          </p>
+          <a onclick="showPage('home')" class="tn-footer-link"
+            ><i class="fas fa-chevron-right text-xs mr-1.5 opacity-50"></i
+            >Home</a
+          >
+          <a onclick="showPage('explore')" class="tn-footer-link"
+            ><i class="fas fa-chevron-right text-xs mr-1.5 opacity-50"></i
+            >Explore</a
+          >
+          <a onclick="showPage('favorites')" class="tn-footer-link"
+            ><i class="fas fa-chevron-right text-xs mr-1.5 opacity-50"></i
+            >Saved</a
+          >
+          <a onclick="showPage('planner')" class="tn-footer-link"
+            ><i class="fas fa-chevron-right text-xs mr-1.5 opacity-50"></i>Plan
+            Trip</a
+          >
+          <a onclick="showPage('about')" class="tn-footer-link"
+            ><i class="fas fa-chevron-right text-xs mr-1.5 opacity-50"></i
+            >About</a
+          >
+        </div>
+        <div>
+          <p
+            style="
+              font-size: 0.72rem;
+              font-weight: 800;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              color: var(--secondary);
+              margin-bottom: 0.85rem;
+            "
+          >
+            Browse By Category
+          </p>
+          <div>
+            <span onclick="filterAndShow('beach')" class="tn-footer-cat"
+              ><i class="fas fa-umbrella-beach text-xs"></i>Beach</span
+            >
+            <span onclick="filterAndShow('hill')" class="tn-footer-cat"
+              ><i class="fas fa-mountain text-xs"></i>Hill</span
+            >
+            <span onclick="filterAndShow('historical')" class="tn-footer-cat"
+              ><i class="fas fa-landmark text-xs"></i>Historical</span
+            >
+            <span onclick="filterAndShow('temple')" class="tn-footer-cat"
+              ><i class="fas fa-place-of-worship text-xs"></i>Temple</span
+            >
+            <span onclick="filterAndShow('nature')" class="tn-footer-cat"
+              ><i class="fas fa-leaf text-xs"></i>Nature</span
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        style="
+          border-top: 1px solid rgba(251, 238, 219, 0.1);
+          padding: 1.25rem 2rem;
+          text-align: center;
+          font-size: 0.78rem;
+        "
+      >
+        © 2026 TravelNest. Crafted with care for travellers everywhere.
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
